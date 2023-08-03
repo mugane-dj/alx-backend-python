@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This module contains an annotated function element_length that takes an
 iterable as an argument and returns a list of tuples representing the
