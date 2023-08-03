@@ -1,11 +1,12 @@
 from functools import reduce
+from typing import List
 """
 This module contains a type-annotated function sum_list which takes a list
 input_list of floats as argument and returns their sum as a float.
 """
 
 
-def sum_list(input_list: list[float]) -> float:
+def sum_list(input_list: List[float]) -> float:
     """
     The function `sum_list` takes a list of floats as input and
     returns the sum of all the elements in the list.
