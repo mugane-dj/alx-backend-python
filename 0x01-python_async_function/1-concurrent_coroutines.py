@@ -3,7 +3,6 @@
 wait_n - An async routine that spans wait_random for n times
 then returns the list of delays sorted in ascending order.
 """
-import asyncio
 from typing import List
 wait_random = __import__('0-basic_async_syntax').wait_random
 
