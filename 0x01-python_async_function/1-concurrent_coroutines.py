@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 wait_n - An async routine that spans wait_random for n times
 then returns the list of delays sorted in ascending order.
