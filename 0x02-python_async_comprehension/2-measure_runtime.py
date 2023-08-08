@@ -16,14 +16,13 @@ async def measure_runtime() -> float:
     :return: The function `measure_runtime` returns a float value
              representing the total runtime of the asynchronous tasks.
     """
-    n = 4
-    tasks = []
     start_time = time.time()
-    for _ in range(n):
-        task = asyncio.create_task(async_comprehension())
-        tasks.append(task)
-
-    await asyncio.gather(*tasks)
+    await asyncio.gather(
+        async_comprehension(),
+        async_comprehension(),
+        async_comprehension(),
+        async_comprehension(),
+    )
     stop_time = time.time()
     total_runtime = stop_time - start_time
     return total_runtime
