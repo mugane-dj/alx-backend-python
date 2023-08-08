@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-worker - implements a function `worker` that calls
-         the async_comprehension function
 measure_runtime - implements a function `measure_runtime`
                   that measures the total runtime of executing the `worker`
                   function asynchronously for `n` times.
@@ -9,14 +7,6 @@ measure_runtime - implements a function `measure_runtime`
 import asyncio
 import time
 async_comprehension = __import__('1-async_comprehension').async_comprehension
-
-
-async def worker() -> None:
-    """
-    The `worker` function is an asynchronous function that
-    calls the `async_comprehension` function.
-    """
-    await async_comprehension()
 
 
 async def measure_runtime() -> float:
@@ -30,7 +20,7 @@ async def measure_runtime() -> float:
     tasks = []
     start_time = time.time()
     for _ in range(n):
-        task = asyncio.create_task(worker())
+        task = asyncio.create_task(async_comprehension())
         tasks.append(task)
 
     await asyncio.gather(*tasks)
