@@ -22,8 +22,7 @@ async def worker() -> None:
 async def measure_runtime() -> float:
     """
     The `measure_runtime` function measures the total runtime
-    of executing the `worker` function
-    asynchronously for `n` times.
+    of executing the `worker` function asynchronously for `n` times.
     :return: The function `measure_runtime` returns a float value
              representing the total runtime of the asynchronous tasks.
     """
