@@ -37,16 +37,20 @@ class TestGetJson(unittest.TestCase):
     Tests for get_json function
     """
 
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
     @unittest.mock.patch('utils.requests.get')
-    def test_get_json(self, mock_get):
+    def test_get_json(self, test_url, test_payload, mock_get):
         mock_res = unittest.mock.Mock()
-        mock_res.json.return_value = {'data': 'mock_res'}
+        mock_res.json.return_value = test_payload
         mock_get.return_value = mock_res
 
-        res = get_json('http://api.example.com/')
+        res = get_json(test_url)
 
-        self.assertEqual(res, {'data': 'mock_res'})
-        mock_get.assert_called_once_with('http://api.example.com/')
+        self.assertEqual(res, test_payload)
+        mock_get.assert_called_once_with(test_url)
 
 
 # class TestClass:
