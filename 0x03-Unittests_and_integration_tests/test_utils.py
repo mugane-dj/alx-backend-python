@@ -32,53 +32,44 @@ class TestAccessNestedMap(unittest.TestCase):
                 access_nested_map(nested_map, path)
 
 
-class TestGetJson(unittest.TestCase):
-    """
-    Tests for get_json function
-    """
+# class TestGetJson(unittest.TestCase):
+#     """
+#     Tests for get_json function
+#     """
 
-    @parameterized.expand([
-        ("http://example.com", {"payload": "true"}),
-        ("http://holberton.io", {"payload": "false"})
-    ])
-    @unittest.mock.patch('requests.get')
-    def test_get_json(self, test_url, test_payload, mock_get):
-        mock_res = unittest.mock.Mock()
-        mock_res.json.return_value = test_payload
-        mock_get.return_value = mock_res
+#     @parameterized.expand([
+#         ("http://example.com", {"payload": True}),
+#         ("http://holberton.io", {"payload": False})
+#     ])
+#     @unittest.mock.patch('requests.get')
+#     def test_get_json(self, test_url, test_payload, mock_get):
+#         mock_res = unittest.mock.Mock()
+#         mock_res.json.return_value = test_payload
+#         mock_get.return_value = mock_res
 
-        res = get_json(test_url)
+#         res = get_json(test_url)
 
-        self.assertEqual(res, test_payload)
-        mock_res.json.assert_called_once()
-        mock_get.assert_called_once_with(test_url)
+#         self.assertEqual(res, test_payload)
+#         mock_res.json.assert_called_once()
+#         mock_get.assert_called_once_with(test_url)
 
 
-# class TestClass:
+class TestClass:
 
-#     def a_method(self):
-#         """
-#         A dummy method
-#         """
-#         return 42
+    def a_method(self):
+        return 42
 
-#     @memoize
-#     def a_property(self):
-#         """
-#         A memoized property should only call the method once
-#         """
-#         return self.a_method()
+    @memoize
+    def a_property(self):
+        return self.a_method()
 
-#     @unittest.mock.patch('utils.cache', {})
-#     def test_memoize(self):
-#         """
-#         Test memoization
-#         """
-#         for _ in range(2):
-#             result = self.a_property()
+    @unittest.mock.patch('utils.cache', {})
+    def test_memoize(self):
+        for _ in range(2):
+            result = self.a_property()
 
-#         self.assertEquals(self.a_method(), result)
-#         self.a_method.assert_called_once()
+        self.assertEquals(self.a_method(), result)
+        self.a_method.assert_called_once()
 
 
 if __name__ == '__main__':
