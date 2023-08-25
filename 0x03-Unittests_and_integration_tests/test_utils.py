@@ -31,7 +31,8 @@ class TestAccessNestedMap(unittest.TestCase):
         expected_result: Union[Dict, int],
     ) -> None:
         """
-        Tests access_nested_map returns output from mapping with provided sequence
+        Tests access_nested_map returns output from mapping with provided
+        sequence
         """
         self.assertEqual(access_nested_map(nested_map, path), expected_result)
 
