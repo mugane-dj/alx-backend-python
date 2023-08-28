@@ -75,7 +75,15 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
+    """
+    Test memoize decorated func
+    """
+
     def test_memoize(self):
+        """
+        Test output is cached when memoize func is called repeatedly
+        """
+
         class TestClass:
             def a_method(self):
                 return 42
