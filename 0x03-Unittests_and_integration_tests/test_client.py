@@ -102,6 +102,6 @@ class TestGithubOrgClient(unittest.TestCase):
         Test has_license static method
         """
         self.assertEqual(
-            GithubOrgClient("google").has_license(repo, license_key),
+            GithubOrgClient.has_license(repo, license_key),
             expected_result,
         )
