@@ -4,11 +4,13 @@ Tests on TestGithubOrgClient class methods and properties
 """
 
 import unittest
-from unittest.mock import MagicMock, patch, PropertyMock
-from typing import Dict
-from parameterized import parameterized
+from unittest.mock import Mock, MagicMock, patch, PropertyMock
+from typing import Dict, Union
+from requests.exceptions import HTTPError
+from parameterized import parameterized, parameterized_class
 
 GithubOrgClient = __import__("client").GithubOrgClient
+TEST_PAYLOAD = __import__("fixtures").TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -104,3 +106,61 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(
             GithubOrgClient.has_license(repo, license_key), expected_result
         )
+
+
+@parameterized_class(
+    [
+        {
+            "org_payload": TEST_PAYLOAD[0][0],
+            "repos_payload": TEST_PAYLOAD[0][1],
+            "expected_repos": TEST_PAYLOAD[0][2],
+            "apache2_repos": TEST_PAYLOAD[0][3],
+        }
+    ]
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+    Integration tests for GithubOrgClient.public_repos
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        """
+        Setup fixtures
+        """
+        payloads = {
+            "https://api.github.com/orgs/google": cls.org_payload,
+            "https://api.github.com/orgs/google/repos": cls.repos_payload,
+        }
+
+        def load_payload(url: str) -> Union[Mock, Exception]:
+            if url in payloads:
+                return Mock(**{"json.return_value": payloads[url]})
+            return HTTPError
+
+        cls.patcher = patch("requests.get", side_effect=load_payload)
+        cls.patcher.start()
+
+    def test_public_repos(self):
+        """
+        Test expected repos are returned
+        """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(), self.expected_repos
+        )
+
+    def test_public_repos_with_license(self):
+        """
+        Test expected repos with Apache-2.0 license returned
+        """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos("apache-2.0"),
+            self.apache2_repos,
+        )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """
+        Teardown class method
+        """
+        cls.patcher.stop()
