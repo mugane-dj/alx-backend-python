@@ -91,8 +91,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @parameterized.expand(
         [
-            ({"license": {"key": "bsd-3-clause"}}, "bsd-3-clause", True),
-            ({"license": {"key": "apache-2.0"}}, "bsd-3-clause", False),
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
         ]
     )
     def test_has_license(
