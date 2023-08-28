@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Tests on TestGithubOrgClient class methods and properties
+"""
+
 import unittest
 from unittest.mock import MagicMock, patch, PropertyMock
 from typing import Dict
