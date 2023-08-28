@@ -27,7 +27,7 @@ class TestGithubOrgClient(unittest.TestCase):
             "https://api.github.com/orgs/{}".format(org)
         )
 
-    def test_public_repos_url(self):
+    def test_public_repos_url(self) -> None:
         """
         Mock property org
         """
@@ -44,7 +44,7 @@ class TestGithubOrgClient(unittest.TestCase):
             )
 
     @patch("client.get_json")
-    def test_public_repos(self, mock_get_json: MagicMock):
+    def test_public_repos(self, mock_get_json: MagicMock) -> None:
         """
         Test public_repos func
         """
