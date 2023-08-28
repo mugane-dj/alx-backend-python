@@ -28,6 +28,9 @@ class TestGithubOrgClient(unittest.TestCase):
         )
 
     def test_public_repos_url(self):
+        """
+        Mock property org
+        """
         instance = GithubOrgClient("google")
         mock_prop = PropertyMock(
             return_value={
@@ -39,3 +42,42 @@ class TestGithubOrgClient(unittest.TestCase):
                 instance._public_repos_url,
                 "https://api.github.com/orgs/google/repos",
             )
+
+    @patch("client.get_json")
+    def test_public_repos(self, mock_get_json: MagicMock):
+        test_payload = {
+            "repos_url": "https://api.github.com/orgs/google/repos",
+            "repos": [
+                {
+                    "id": 7697149,
+                    "node_id": "MDEwOlJlcG9zaXRvcnk3Njk3MTQ5",
+                    "name": "episodes.dart",
+                    "full_name": "google/episodes.dart",
+                    "private": False,
+                },
+                {
+                    "id": 7776515,
+                    "node_id": "MDEwOlJlcG9zaXRvcnk3Nzc2NTE1",
+                    "name": "cpp-netlib",
+                    "full_name": "google/cpp-netlib",
+                    "private": False,
+                },
+            ],
+        }
+        mock_get_json.return_value = test_payload["repos"]
+        instance = GithubOrgClient("google")
+        mock_public_repos_url = PropertyMock(
+            return_value=test_payload["repos_url"]
+        )
+        with patch.object(
+            instance.__class__, "_public_repos_url", mock_public_repos_url
+        ):
+            self.assertEqual(
+                instance.public_repos(),
+                [
+                    "episodes.dart",
+                    "cpp-netlib",
+                ],
+            )
+        mock_public_repos_url.assert_called_once()
+        mock_get_json.assert_called_once()
