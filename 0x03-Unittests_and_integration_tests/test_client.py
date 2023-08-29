@@ -138,8 +138,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
                 return Mock(**{"json.return_value": payloads[url]})
             return HTTPError
 
-        cls.patcher = patch("requests.get", side_effect=load_payload)
-        cls.patcher.start()
+        cls.get_patcher = patch("requests.get", side_effect=load_payload)
+        cls.get_patcher.start()
 
     def test_public_repos(self):
         """
@@ -163,4 +163,4 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         Teardown class method
         """
-        cls.patcher.stop()
+        cls.get_patcher.stop()
